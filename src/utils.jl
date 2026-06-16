@@ -95,6 +95,10 @@ Return the electron gyrofrequency ωH in rad s⁻¹.
 
 # Arguments
 - `B`: geomagnetic field magnitude in Tesla as a scalar
+
+# Returns
+- ωH in rad s⁻¹
+
 """
 function gyrofrequency_rad(B::Real)
     B < 0 && throw(DomainError(B, "magnetic field magnitude must be non-negative"))
@@ -111,6 +115,9 @@ field vector.
 
 # Arguments
 - `B_vec`: geomagnetic field vector in Tesla
+
+# Returns
+- ωH in rad s⁻¹
 """
 function gyrofrequency_rad(B_vec::AbstractVector)
     return gyrofrequency_rad(norm(B_vec))
@@ -123,6 +130,9 @@ Return the electron gyrofrequency fH in Hz.
 
 # Arguments
 - `B`: geomagnetic field magnitude in Tesla, or field vector in Tesla
+
+# Returns
+- fH in Hz
 
 # See Also
 - [`gyrofrequency_rad`](@ref): equivalent in rad s⁻¹
@@ -137,6 +147,9 @@ Return the squared electron gyrofrequency ωH² in rad² s⁻².
 # Arguments
 - `B`: geomagnetic field magnitude in Tesla, or field vector in Tesla
 
+# Returns
+- ωH² in rad² s⁻²
+
 # See Also
 - [`gyrofrequency_rad`](@ref): base calculation in rad s⁻¹
 - [`gyrofrequency_hz_sq`](@ref): equivalent in Hz²
@@ -150,6 +163,9 @@ Return the squared electron gyrofrequency fH² in Hz².
 
 # Arguments
 - `B`: geomagnetic field magnitude in Tesla, or field vector in Tesla
+
+# Returns
+- fH² in Hz²
 
 # See Also
 - [`gyrofrequency_rad`](@ref): base calculation in rad s⁻¹
@@ -166,6 +182,9 @@ and geomagnetic field vector `B`.
 # Arguments
 - `k`: wave normal direction as a 3-vector (need not be normalized)
 - `B_vec`: geomagnetic field as a 3-vector in Tesla
+
+# Returns
+- θ in radians
 
 # Notes
 This is clamped at ±1 before applying `acos` to avoid NaN results from 
@@ -211,6 +230,29 @@ function field_magnitude_and_angle(B_vec::AbstractVector)
     return field_magnitude_and_angle(B_vec, VERTICAL)
 end
 
+"""
+    field_magnitude_and_dircos(B_vec, k)
+
+Return `(|B|, sinθ, cosθ)` given a geomagnetic field vector and wave normal,
+where θ is the angle between `k` and `B_vec`.
+
+# Arguments
+- `B_vec`: geomagnetic field as a 3-vector in Tesla
+- `k`: wave normal direction as a 3-vector (need not be normalized)
+
+# Returns
+- Tuple `(B, s, c)` where `B = |B_vec|` in Tesla, `s = sinθ`, and `c = cosθ`
+
+# Notes
+- Computes `cosθ` directly as a clamped direction cosine and obtains `sinθ` from
+  `√(1 - cos²θ)`, avoiding an `acos`/`sincos` round trip.
+- `cosθ` is clamped to `[-1, 1]` to guard against floating point excursions when
+  `k` and `B_vec` are nearly (anti)parallel.
+- `sinθ ≥ 0` always, since θ ∈ [0, π].
+
+# See Also
+- [`field_magnitude_and_angle`](@ref): returns `(|B|, θ)` instead of direction cosines
+"""
 function field_magnitude_and_dircos(B_vec::AbstractVector, k::AbstractVector)
     B = norm(B_vec)
     c = clamp(dot(k, B_vec) / (norm(k) * B), -1.0, 1.0)
@@ -218,6 +260,22 @@ function field_magnitude_and_dircos(B_vec::AbstractVector, k::AbstractVector)
     return B, s, c
 end
 
+"""
+    field_magnitude_and_dircos(B_vec)
+
+Return `(|B|, sinθ, cosθ)` given a geomagnetic field vector and an assumed
+vertical wave normal.
+
+# Arguments
+- `B_vec`: geomagnetic field as a 3-vector in Tesla
+
+# Returns
+- Tuple `(B, s, c)` where `B = |B_vec|` in Tesla, `s = sinθ`, and `c = cosθ`,
+  with θ measured from the local vertical
+
+# See Also
+- [`field_magnitude_and_dircos`](@ref): two-argument form for an explicit wave normal
+"""
 function field_magnitude_and_dircos(B_vec::AbstractVector)
     return field_magnitude_and_dircos(B_vec, VERTICAL)
 end
@@ -234,6 +292,9 @@ rather than from horizontal.
 # Arguments  
 - `B_vec`: geomagnetic field as a 3-vector in any consistent
   coordinate system where the third component is vertical
+
+# Returns
+- θ in radians
 """
 function vertical_wave_normal_angle(B_vec::AbstractVector)
     return wave_normal_angle(VERTICAL, B_vec)
