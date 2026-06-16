@@ -5,8 +5,8 @@ function radio_absorption_rad(n_e, ν, B_vec::AbstractVector, k::AbstractVector,
     αO = 2 * imag(sqrt(n²_O)) * ω / C_LIGHT
     αX = 2 * imag(sqrt(n²_X)) * ω / C_LIGHT 
 
-    Absorp_O = 10*log10(ℯ) * αO # dB/m
-    Absorp_X = 10*log10(ℯ) * αX # dB/m
+    Absorp_O = NEPER_TO_DB * αO # dB/m
+    Absorp_X = NEPER_TO_DB * αX # dB/m
     return (O=Absorp_O, X=Absorp_X)
 end
 
@@ -16,8 +16,8 @@ function radio_absorption_rad(n_e, ν, B_vec::AbstractVector, ω::Real)
     αO = 2 * imag(sqrt(n²_O)) * ω / C_LIGHT
     αX = 2 * imag(sqrt(n²_X)) * ω / C_LIGHT 
 
-    Absorp_O = 10*log10(ℯ) * αO # dB/m
-    Absorp_X = 10*log10(ℯ) * αX # dB/m
+    Absorp_O = NEPER_TO_DB * αO # dB/m
+    Absorp_X = NEPER_TO_DB * αX # dB/m
     return (O=Absorp_O, X=Absorp_X)
 end
 
@@ -27,8 +27,8 @@ function radio_absorption_rad(n_e, ν, B::Real, θ::Real, ω::Real)
     αO = 2 * imag(sqrt(n²_O)) * ω / C_LIGHT
     αX = 2 * imag(sqrt(n²_X)) * ω / C_LIGHT 
 
-    Absorp_O = 10*log10(ℯ) * αO # dB/m
-    Absorp_X = 10*log10(ℯ) * αX # dB/m
+    Absorp_O = NEPER_TO_DB * αO # dB/m
+    Absorp_X = NEPER_TO_DB * αX # dB/m
     return (O=Absorp_O, X=Absorp_X)
 end
 

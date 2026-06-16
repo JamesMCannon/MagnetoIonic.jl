@@ -1,16 +1,17 @@
-function _appleton_hartree_kernel(X, Y, Z, θ)
-    YL = Y * cos(θ)
-    YT = Y * sin(θ)
-    
-    U = 1 + im * Z
-    UX = U - X
-    Δ  = sqrt(complex(YT^4 / 4 + YL^2 * UX^2))
+@inline function _appleton_hartree_kernel(X, Y, Z, sinθ, cosθ)
+    YL  = Y * cosθ
+    YT  = Y * sinθ
+    YT² = YT * YT
 
-    n²_O  = 1 - X / (U - YT^2/(2 * UX) + Δ/UX)
-    
-    n²_X = 1 - X / (U - YT^2/(2 * UX) - Δ/UX)
-    
-    return (O=n²_O, X=n²_X)
+    U  = complex(one(Z), Z)              # 1 + im*Z, always ComplexF64
+    UX = U - X
+    Δ  = sqrt(YT² * YT² / 4 + YL^2 * UX^2)   # already complex since UX is
+
+    term = U - YT² / (2 * UX)            # computed once
+    disc = Δ / UX                        # computed once
+    n²_O = 1 - X / (term + disc)
+    n²_X = 1 - X / (term - disc)
+    return (O = n²_O, X = n²_X)
 end
 
 
@@ -45,8 +46,8 @@ Return the squared index of refraction for the O and X modes.
 """
 function appleton_hartree_rad(n_e, ν, B::Real, θ::Real, ω::Real)
     X, Y, Z = _magnetoionic_parameters(n_e, ν, B, ω)
-    n²_O, n²_X = _appleton_hartree_kernel(X, Y, Z, θ)
-    return (O=n²_O, X=n²_X)
+    s, c = sincos(θ)                      # one call, not two
+    return _appleton_hartree_kernel(X, Y, Z, s, c)
 end
 
 """
@@ -72,8 +73,9 @@ Return the squared index of refraction for the O and X modes.
 - [`appleton_hartree_hz`](@ref): equivalent function for Hz input
 """
 function appleton_hartree_rad(n_e, ν, B_vec::AbstractVector, k::AbstractVector, ω::Real)
-    B, θ = field_magnitude_and_angle(B_vec, k)
-    return appleton_hartree_rad(n_e, ν, B, θ, ω)
+    B, s, c = field_magnitude_and_dircos(B_vec, k)
+    X, Y, Z = _magnetoionic_parameters(n_e, ν, B, ω)
+    return _appleton_hartree_kernel(X, Y, Z, s, c)
 end
 
 """
@@ -99,8 +101,9 @@ Return the squared index of refraction for the O and X modes.
 - [`appleton_hartree_hz`](@ref): equivalent function for Hz input
 """
 function appleton_hartree_rad(n_e, ν, B_vec::AbstractVector, ω::Real)
-    B, θ = field_magnitude_and_angle(B_vec)
-    return appleton_hartree_rad(n_e, ν, B, θ, ω)
+    B, s, c = field_magnitude_and_dircos(B_vec)
+    X, Y, Z = _magnetoionic_parameters(n_e, ν, B, ω)
+    return _appleton_hartree_kernel(X, Y, Z, s, c)
 end
 
 """
@@ -153,8 +156,8 @@ Return the squared index of refraction for the O and X modes.
 - [`appleton_hartree_rad`](@ref): equivalent function for rad s⁻¹ input
 """
 function appleton_hartree_hz(n_e, ν, B_vec::AbstractVector, k::AbstractVector, f)
-    B, θ = field_magnitude_and_angle(B_vec, k)
-    return appleton_hartree_hz(n_e, ν, B, θ, f)
+    ω = 2π * f
+    return appleton_hartree_rad(n_e, ν, B_vec, k, ω)
 end
 
 """
@@ -180,6 +183,6 @@ Return the squared index of refraction for the O and X modes.
 - [`appleton_hartree_rad`](@ref): equivalent function for rad s⁻¹ input
 """
 function appleton_hartree_hz(n_e, ν, B_vec::AbstractVector, f)
-    B, θ = field_magnitude_and_angle(B_vec)
-    return appleton_hartree_hz(n_e, ν, B, θ, f)
+    ω = 2π * f
+    return appleton_hartree_rad(n_e, ν, B_vec, ω)
 end

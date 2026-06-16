@@ -211,7 +211,16 @@ function field_magnitude_and_angle(B_vec::AbstractVector)
     return field_magnitude_and_angle(B_vec, VERTICAL)
 end
 
+function field_magnitude_and_dircos(B_vec::AbstractVector, k::AbstractVector)
+    B = norm(B_vec)
+    c = clamp(dot(k, B_vec) / (norm(k) * B), -1.0, 1.0)
+    s = sqrt(1 - c * c)        # θ ∈ [0,π] ⇒ sinθ ≥ 0
+    return B, s, c
+end
 
+function field_magnitude_and_dircos(B_vec::AbstractVector)
+    return field_magnitude_and_dircos(B_vec, VERTICAL)
+end
 
 """
     vertical_wave_normal_angle(B_vec)
