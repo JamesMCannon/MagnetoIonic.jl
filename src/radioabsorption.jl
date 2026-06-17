@@ -11,7 +11,7 @@ Return the power absorption coefficient for the O and X modes.
 - `ω`: wave angular frequency in rad s⁻¹
 
 # Returns
-- Tuple `(O, X)` where `O` and `X` are the absorption coefficients in dB m⁻¹ for the O and X modes, respectively
+- NamedTuple `(O, X)` where `O` and `X` are the absorption coefficients in dB m⁻¹ for the O and X modes, respectively
 
 # Notes
 - The absorption coefficient describes the spatial decay of wave power, `P(z) = P₀ · 10^(-α z / 10)` with `α` in dB m⁻¹.
@@ -49,7 +49,7 @@ Return the power absorption coefficient for the O and X modes.
 - `ω`: wave angular frequency in rad s⁻¹
 
 # Returns
-- Tuple `(O, X)` where `O` and `X` are the absorption coefficients in dB m⁻¹ for the O and X modes, respectively
+- NamedTuple `(O, X)` where `O` and `X` are the absorption coefficients in dB m⁻¹ for the O and X modes, respectively
 
 # Notes
 - This assumes a vertical wave normal (parallel to the local vertical), so the angle θ is determined solely by the orientation of the magnetic field vector.
@@ -87,7 +87,7 @@ Return the power absorption coefficient for the O and X modes.
 - `ω`: wave angular frequency in rad s⁻¹
 
 # Returns
-- Tuple `(O, X)` where `O` and `X` are the absorption coefficients in dB m⁻¹ for the O and X modes, respectively
+- NamedTuple `(O, X)` where `O` and `X` are the absorption coefficients in dB m⁻¹ for the O and X modes, respectively
 
 # Notes
 - See the `B_vec, k` method for the definition of the absorption coefficient.
@@ -124,7 +124,7 @@ Return the power absorption coefficient for the O and X modes.
 - `f`: wave frequency in Hz
 
 # Returns
-- Tuple `(O, X)` where `O` and `X` are the absorption coefficients in dB m⁻¹ for the O and X modes, respectively
+- NamedTuple `(O, X)` where `O` and `X` are the absorption coefficients in dB m⁻¹ for the O and X modes, respectively
 
 # Notes
 - Converts the frequency to angular frequency (`ω = 2πf`) and forwards to [`radio_absorption_rad`](@ref).
@@ -154,7 +154,7 @@ Return the power absorption coefficient for the O and X modes.
 - `f`: wave frequency in Hz
 
 # Returns
-- Tuple `(O, X)` where `O` and `X` are the absorption coefficients in dB m⁻¹ for the O and X modes, respectively
+- NamedTuple `(O, X)` where `O` and `X` are the absorption coefficients in dB m⁻¹ for the O and X modes, respectively
 
 # Notes
 - This assumes a vertical wave normal (parallel to the local vertical), so the angle θ is determined solely by the orientation of the magnetic field vector.
@@ -186,7 +186,7 @@ Return the power absorption coefficient for the O and X modes.
 - `f`: wave frequency in Hz
 
 # Returns
-- Tuple `(O, X)` where `O` and `X` are the absorption coefficients in dB m⁻¹ for the O and X modes, respectively
+- NamedTuple `(O, X)` where `O` and `X` are the absorption coefficients in dB m⁻¹ for the O and X modes, respectively
 
 # Notes
 - Converts the frequency to angular frequency (`ω = 2πf`) and forwards to [`radio_absorption_rad`](@ref).

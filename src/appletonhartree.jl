@@ -12,7 +12,7 @@ modes.
 - `sinθ`, `cosθ`: sine and cosine of the angle between the wave normal and the magnetic field
 
 # Returns
-- Tuple `(O, X)` of the complex squared refractive indices for the `+` and `-`
+- NamedTuple `(O, X)` of the complex squared refractive indices for the `+` and `-`
   roots of the discriminant, respectively
 
 # Notes
@@ -85,7 +85,7 @@ Return the squared index of refraction for the O and X modes as calculated using
 - `ω`: wave angular frequency in rad s⁻¹
 
 # Returns
-- Tuple `(O, X)` where `O` and `X` are the squared indices of refraction for the O and X modes, respectively
+- NamedTuple `(O, X)` where `O` and `X` are the squared indices of refraction for the O and X modes, respectively
 
 # Notes
 - This is the ''full'' Appleton-Hartree equation, including collisions and valid for any angle θ.
@@ -120,7 +120,7 @@ Return the squared index of refraction for the O and X modes.
 - `ω`: wave angular frequency in rad s⁻¹
 
 # Returns
-- Tuple `(O, X)` where `O` and `X` are the squared indices of refraction for the O and X modes, respectively
+- NamedTuple `(O, X)` where `O` and `X` are the squared indices of refraction for the O and X modes, respectively
 
 # Notes
 - This is the ''full'' Appleton-Hartree equation, including collisions and valid for any angle θ.
@@ -154,7 +154,7 @@ Return the squared index of refraction for the O and X modes.
 - `ω`: wave angular frequency in rad s⁻¹
 
 # Returns
-- Tuple `(O, X)` where `O` and `X` are the squared indices of refraction for the O and X modes, respectively
+- NamedTuple `(O, X)` where `O` and `X` are the squared indices of refraction for the O and X modes, respectively
 
 # Notes
 - This assumes a vertical wave normal (parallel to the local vertical), so the angle θ is determined solely by the orientation of the magnetic field vector.
@@ -190,7 +190,7 @@ Return the squared index of refraction for the O and X modes.
 - `f`: wave frequency in Hz
 
 # Returns
-- Tuple `(O, X)` where `O` and `X` are the squared indices of refraction for the O and X modes, respectively
+- NamedTuple `(O, X)` where `O` and `X` are the squared indices of refraction for the O and X modes, respectively
 
 # Notes
 - This is the ''full'' Appleton-Hartree equation, including collisions and valid for any angle θ.
@@ -224,7 +224,7 @@ Return the squared index of refraction for the O and X modes.
 - `f`: wave frequency in Hz
 
 # Returns
-- Tuple `(O, X)` where `O` and `X` are the squared indices of refraction for the O and X modes, respectively
+- NamedTuple `(O, X)` where `O` and `X` are the squared indices of refraction for the O and X modes, respectively
 
 # Notes
 - This is the ''full'' Appleton-Hartree equation, including collisions and valid for any angle θ.
@@ -257,7 +257,7 @@ Return the squared index of refraction for the O and X modes.
 - `f`: wave frequency in Hz
 
 # Returns
-- Tuple `(O, X)` where `O` and `X` are the squared indices of refraction for the O and X modes, respectively
+- NamedTuple `(O, X)` where `O` and `X` are the squared indices of refraction for the O and X modes, respectively
 
 # Notes
 - This assumes a vertical wave normal (parallel to the local vertical), so the angle θ is determined solely by the orientation of the magnetic field vector.
