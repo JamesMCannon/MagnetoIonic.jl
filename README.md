@@ -9,7 +9,7 @@ MagnetoIonic.jl serves to aid in the computation of radio wave propagation throu
 
 As it currently stands, this package can calculate the squared index of refraction using the Appleton-Hartree equation in either Hertz or radians from `appleton_hartree_rad()` and `appleton_hartree_hz()`. 
 
-Multiple input types are supported for both but all functions need a provided electron density `n_e` in m⁻³, effective electron-neutral collision frequency in s⁻¹, magnetic field and wave propogation as either as a 3 component vector `B_vec` in T with associated wave `k` vector or as magentitude `B` in T and angle `θ` between the wave normal and magnetic field in radians and radio frequency in either radians s⁻¹ or Hertz.
+Multiple input types are supported for both, but all functions need a provided electron density `n_e` in m⁻³, effective electron-neutral collision frequency `ν` in s⁻¹, magnetic field and wave propogation as either as a 3 component vector `B_vec` in T with associated wave `k` vector or as magentitude `B` in T and angle `θ` between the wave normal and magnetic field in radians and radio frequency in either radians s⁻¹ or Hertz.
 
 When supplying `B_vec`, `k` is optional and, if not included, the assumed direction of wave propagation is vertical [0, 0, 1].
 
