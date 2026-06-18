@@ -9,7 +9,7 @@ makedocs(;
     sitename="MagnetoIonic.jl",
     format=Documenter.HTML(;
         canonical="https://JamesMCannon.github.io/MagnetoIonic.jl",
-        edit_link="master",
+        edit_link="main",
         assets=String[],
     ),
     pages=[
@@ -19,5 +19,5 @@ makedocs(;
 
 deploydocs(;
     repo="github.com/JamesMCannon/MagnetoIonic.jl",
-    devbranch="master",
+    devbranch="main",
 )
